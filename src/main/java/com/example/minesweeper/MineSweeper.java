@@ -1,8 +1,6 @@
 package com.example.minesweeper;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
@@ -27,7 +25,7 @@ public class MineSweeper extends Application {
     }
 
 
-    public void setGridpane(double gridPaneSize) {
+    public void setGridPane(double gridPaneSize) {
         gridPane.setPrefSize(gridPaneSize, gridPaneSize);
         gridPane.setGridLinesVisible(true);
         gridPane.getColumnConstraints().add(new ColumnConstraints(gridPaneSize));
@@ -43,7 +41,7 @@ public class MineSweeper extends Application {
         textbomb.setFont(new Font(37));
     }
 
-    public void BackGroundTextArrayLoop(){
+    public void BackGroundArrayNumberLoop(){
         for(int x = 0; x < 10; x++){
             for (int y = 0; y < 10; y++){
                 this.isPutBomb(x,y);
@@ -53,24 +51,24 @@ public class MineSweeper extends Application {
 
     public  void isPutBomb(int line,int column){
         if(this.getRandomBomb() < 10){
-            this.setRandomBackGroundTextArrayLoop(line,column);
+            this.NearPanesArrayNumberLoop(line,column);
         }
     }
 
 
-    public void setRandomBackGroundTextArrayLoop(int line, int column){
+    public void NearPanesArrayNumberLoop(int line, int column){
             for(int k= -1 ; k < 2; k++){
                 for (int l = -1 ; l < 2; l++){
-                    setRandomBackGroundTextArray(line,column,k,l);
+                    BackGroundArrayNumber(line,column,k,l);
                 }
             }
     }
 
-    public void setRandomBackGroundTextArray(int line , int column,int currentLine,int currentColumn) {
+    public void BackGroundArrayNumber(int line , int column, int currentLine, int currentColumn) {
         if (line + currentLine > -1 && column + currentColumn > -1 && line + currentLine < 10 && column + currentColumn < 10) {
-            this.addBackGroundTextArrayint(line + currentLine, column + currentColumn);
+            this.addBackGroundArrayNumber(line + currentLine, column + currentColumn);
             if (line + currentLine == line && column + currentColumn == column) {
-                this.setBackGroundTextArray(line, column, 100);
+                this.setBackGroundArrayNumber(line, column, 100);
             }
         }
     }
@@ -79,15 +77,15 @@ public class MineSweeper extends Application {
         return gridPaneSize;
     }
 
-    public int getBackGroundTextArrayint(int line,int column) {
+    public int getBackGroundArraysNumber(int line, int column) {
         return backGroundTextArray[line][column];
     }
 
-    public void addBackGroundTextArrayint(int line, int column){
+    public void addBackGroundArrayNumber(int line, int column){
         this.backGroundTextArray[line][column]++;
     }
 
-    public void setBackGroundTextArray(int line, int column,int number) {
+    public void setBackGroundArrayNumber(int line, int column, int number) {
         this.backGroundTextArray[line][column] = number;
     }
 
@@ -105,18 +103,18 @@ public class MineSweeper extends Application {
 
     @Override
     public void start(Stage stage) {
-        this.BackGroundTextArrayLoop();
+        this.BackGroundArrayNumberLoop();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 Text textbomb = new Text();
                 Button button = new Button();
-                setGridpane(gridPaneSize);
-                setButtonsSize(gridPaneSize, button);
+                setGridPane(this.getGridPaneSize());
+                setButtonsSize(this.getGridPaneSize(), button);
                 setText(textbomb);
                 Text nearBombNum = new Text(String.valueOf(backGroundTextArray[i][j]));
                 nearBombNum.setFont(new Font(37));
 
-                if(backGroundTextArray[i][j] >= 100){
+                if(this.getBackGroundArraysNumber(i,j) >= 100){
                     gridPane.add(textbomb,i,j);
                     button.setId("BOOM");
                 }else{
