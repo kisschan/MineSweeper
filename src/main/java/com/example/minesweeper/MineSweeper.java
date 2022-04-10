@@ -18,7 +18,7 @@ public class MineSweeper extends Application {
     Random random = new Random();
 
     private final double gridPaneSize;
-    int[][] backGroundTextArray = new int[10][10];
+    BackGroundNumbersArrayClass backGroundNumbersArrayClass = new BackGroundNumbersArrayClass(new int[10][10]);
 
 
     public MineSweeper() {
@@ -26,7 +26,7 @@ public class MineSweeper extends Application {
     }
 
 
-    public void backGroundArrayNumberLoop(){
+    public void backGroundNumbersArrayLoop(){
         for(int x = 0; x < 10; x++){
             for (int y = 0; y < 10; y++){
                 this.isPutBomb(x,y);
@@ -36,43 +36,32 @@ public class MineSweeper extends Application {
 
     public  void isPutBomb(int line,int column){
         if(this.getRandomBomb() < 10){
-            this.nearPanesArrayNumberLoop(line,column);
+            this.nearBombPanesBackGroundNumbersLoop(line,column);
         }
     }
 
 
-    public void nearPanesArrayNumberLoop(int line, int column){
+    public void nearBombPanesBackGroundNumbersLoop(int line, int column){
             for(int k= -1 ; k < 2; k++){
                 for (int l = -1 ; l < 2; l++){
-                    this.backGroundArrayNumber(line,column,k,l);
+                    this.backGroundNumbers(line,column,k,l);
                 }
             }
     }
 
-    public void backGroundArrayNumber(int line , int column, int currentLine, int currentColumn) {
+    public void backGroundNumbers(int line , int column, int currentLine, int currentColumn) {
         if (line + currentLine > -1 && column + currentColumn > -1 && line + currentLine < 10 && column + currentColumn < 10) {
-            this.addBackGroundArrayNumber(line + currentLine, column + currentColumn);
+            backGroundNumbersArrayClass.addBackGroundNumber(line + currentLine, column + currentColumn);
             this.isSetBombPane(line,column,currentLine,currentColumn);
         }
     }
 
     public void isSetBombPane(int line, int column, int currentLine, int currentColumn){
         if (line + currentLine == line && column + currentColumn == column) {
-            this.setBackGroundArrayNumber(line, column, 100);
+            backGroundNumbersArrayClass.setBackGroundNumber(line, column, 100);
         }
     }
 
-    public void addBackGroundArrayNumber(int line, int column){
-        this.backGroundTextArray[line][column]++;
-    }
-
-    public int getBackGroundArraysNumber(int line, int column) {
-        return backGroundTextArray[line][column];
-    }
-
-    public void setBackGroundArrayNumber(int line, int column, int number) {
-        this.backGroundTextArray[line][column] = number;
-    }
 
     public int getRandomBomb() {
         return random.nextInt(100);
@@ -99,12 +88,12 @@ public class MineSweeper extends Application {
     }
 
     public void setNearBombText(Text nearBombNum, int line, int column){
-        nearBombNum.setText(String.valueOf(this.getBackGroundArraysNumber(line,column)));
+        nearBombNum.setText(String.valueOf(backGroundNumbersArrayClass.getBackGroundNumber(line,column)));
         nearBombNum.setFont(new Font(37));
     }
 
     public void setGridPane(int line,int column, Text bombText, Text nearBombNumberText,Button button){
-        if(this.getBackGroundArraysNumber(line,column) >= 100){
+        if(backGroundNumbersArrayClass.getBackGroundNumber(line,column) >= 100){
             gridPane.add(bombText,line,column);
             button.setId("BOOM");
         }else{
@@ -121,7 +110,7 @@ public class MineSweeper extends Application {
 
     @Override
     public void start(Stage stage) {
-        this.backGroundArrayNumberLoop();
+        this.backGroundNumbersArrayLoop();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 Text bombText = new Text();
