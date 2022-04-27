@@ -41,15 +41,22 @@ public class MineSweeper extends Application {
 
 	public void setBombText(Text bombText){
 		bombText.setText("💣");
-		bombText.setFont(new Font(37));
+		bombText.setFont(new Font(gridPaneSize*37/50));
 	}
 
-	public void setNearBombText(Text nearBombNum, int line, int column){
+	public void setNearBombText(Text nearBombNum, Text notNearBombText, int line, int column){
 		if(backGroundNumbersArrayClass.getBackGroundNumber(line, column) != 0){
 			nearBombNum.setText(String.valueOf(backGroundNumbersArrayClass.getBackGroundNumber(line,column)));
 			nearBombNum.setFont(new Font(37));
 			this.setNearBombTextColor(nearBombNum, line, column);
+		}else{
+			this.setNotNearBombText(notNearBombText);
 		}
+	}
+
+	private void setNotNearBombText(Text notNearBombText) {
+		notNearBombText.setText(" ");
+		notNearBombText.setFont(new Font(gridPaneSize*37/50));
 	}
 
 	public void setNearBombTextColor(Text nearBombNum, int line, int column){
@@ -64,12 +71,14 @@ public class MineSweeper extends Application {
 		}
 	}
 
-	public void setGridPane(int line,int column, Text bombText, Text nearBombNumberText,Button button){
+	public void setGridPane(int line,int column, Text bombText, Text nearBombNumberText,Text notNearBombText, Button button){
 		if(backGroundNumbersArrayClass.getBackGroundNumber(line,column) >= 100){
 			gridPane.add(bombText,line,column);
 			button.setId("BOOM");
-		}else{
+		}else if(backGroundNumbersArrayClass.getBackGroundNumber(line,column) > 0){
 			gridPane.add(nearBombNumberText,line,column);
+		}else{
+			gridPane.add(notNearBombText,line,column);
 		}
 	}
 
@@ -91,12 +100,13 @@ public class MineSweeper extends Application {
 			for (int j = 0; j < 10; j++) {
 				Text bombText = new Text();
 				Text nearBombNumberText = new Text();
+				Text notNearBombText = new Text();
 				Button button = new Button();
 				this.setGridPaneSize(this.getGridPaneSize());
 				this.setButtonsSize(this.getGridPaneSize(), button);
 				this.setBombText(bombText);
-				this.setNearBombText(nearBombNumberText,i,j);
-				this.setGridPane(i,j,bombText,nearBombNumberText,button);
+				this.setNearBombText(nearBombNumberText,notNearBombText,i,j);
+				this.setGridPane(i,j,bombText,nearBombNumberText,notNearBombText,button);
 
 				button.setText(String.valueOf(i)+ j);
 				button.setOnAction(actionEvent -> {
