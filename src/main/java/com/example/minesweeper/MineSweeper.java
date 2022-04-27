@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -19,11 +18,13 @@ public class MineSweeper extends Application {
 	BackGroundNumbersArrayClass backGroundNumbersArrayClass = new BackGroundNumbersArrayClass(new int[10][10]);
 	SetLoop setLoop = new SetLoop(new IsSetBomb(this.getBackGroundNumbersArrayClass()));
 	private final double gridPaneSize;
+	private SetBackGroundText setBackGroundText = new SetBackGroundText(this.getBackGroundNumbersArrayClass(), this.getGridPaneSize());
 
 
 	public MineSweeper() {
 		this.gridPaneSize = 50;
 	}
+
 	public double getGridPaneSize() {
 		return gridPaneSize;
 	}
@@ -39,37 +40,7 @@ public class MineSweeper extends Application {
 		button.setPrefWidth(gridPaneSize);
 	}
 
-	public void setBombText(Text bombText){
-		bombText.setText("💣");
-		bombText.setFont(new Font(gridPaneSize*37/50));
-	}
 
-	public void setNearBombText(Text nearBombNum, Text notNearBombText, int line, int column){
-		if(backGroundNumbersArrayClass.getBackGroundNumber(line, column) != 0){
-			nearBombNum.setText(String.valueOf(backGroundNumbersArrayClass.getBackGroundNumber(line,column)));
-			nearBombNum.setFont(new Font(37));
-			this.setNearBombTextColor(nearBombNum, line, column);
-		}else{
-			this.setNotNearBombText(notNearBombText);
-		}
-	}
-
-	private void setNotNearBombText(Text notNearBombText) {
-		notNearBombText.setText(" ");
-		notNearBombText.setFont(new Font(gridPaneSize*37/50));
-	}
-
-	public void setNearBombTextColor(Text nearBombNum, int line, int column){
-		if(backGroundNumbersArrayClass.getBackGroundNumber(line,column) == 1){
-			nearBombNum.setFill(Color.BLUE);
-		}else if(backGroundNumbersArrayClass.getBackGroundNumber(line, column) == 2){
-			nearBombNum.setFill(Color.GREEN);
-		}else if(backGroundNumbersArrayClass.getBackGroundNumber(line, column) == 3){
-			nearBombNum.setFill(Color.YELLOW);
-		}else if(backGroundNumbersArrayClass.getBackGroundNumber(line, column) >= 4){
-			nearBombNum.setFill(Color.RED);
-		}
-	}
 
 	public void setGridPane(int line,int column, Text bombText, Text nearBombNumberText,Text notNearBombText, Button button){
 		if(backGroundNumbersArrayClass.getBackGroundNumber(line,column) >= 100){
@@ -104,10 +75,9 @@ public class MineSweeper extends Application {
 				Button button = new Button();
 				this.setGridPaneSize(this.getGridPaneSize());
 				this.setButtonsSize(this.getGridPaneSize(), button);
-				this.setBombText(bombText);
-				this.setNearBombText(nearBombNumberText,notNearBombText,i,j);
+				setBackGroundText.setNearBombText(nearBombNumberText,notNearBombText,i,j);
+				setBackGroundText.getBombText(bombText);
 				this.setGridPane(i,j,bombText,nearBombNumberText,notNearBombText,button);
-
 				button.setText(String.valueOf(i)+ j);
 				button.setOnAction(actionEvent -> {
 					button.setVisible(false);
