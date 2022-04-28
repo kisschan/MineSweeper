@@ -3,9 +3,9 @@ package com.example.minesweeper;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -14,16 +14,15 @@ import java.util.Objects;
 public class MineSweeper extends Application {
 
 	GridPane gridPane = new GridPane();
-
 	BackGroundNumbersArrayClass backGroundNumbersArrayClass = new BackGroundNumbersArrayClass(new int[10][10]);
 	SetLoop setLoop = new SetLoop(new IsSetBomb(this.getBackGroundNumbersArrayClass()));
 	private final double gridPaneSize;
-	private SetBackGroundText setBackGroundText = new SetBackGroundText(this.getBackGroundNumbersArrayClass(), this.getGridPaneSize());
-
+	private final SetBackGroundText setBackGroundText = new SetBackGroundText(this.getBackGroundNumbersArrayClass(), this.getGridPaneSize());
 
 	public MineSweeper() {
 		this.gridPaneSize = 50;
 	}
+
 
 	public double getGridPaneSize() {
 		return gridPaneSize;
@@ -39,8 +38,6 @@ public class MineSweeper extends Application {
 		button.setPrefHeight(gridPaneSize);
 		button.setPrefWidth(gridPaneSize);
 	}
-
-
 
 	public void setGridPane(int line,int column, Text bombText, Text nearBombNumberText,Text notNearBombText, Button button){
 		if(backGroundNumbersArrayClass.getBackGroundNumber(line,column) >= 100){
@@ -79,12 +76,21 @@ public class MineSweeper extends Application {
 				setBackGroundText.getBombText(bombText);
 				this.setGridPane(i,j,bombText,nearBombNumberText,notNearBombText,button);
 				button.setText(String.valueOf(i)+ j);
-				button.setOnAction(actionEvent -> {
-					button.setVisible(false);
-					if (Objects.equals(button.getId(), "BOOM")) {
-						gridPane.getChildren().removeAll(gridPane.lookupAll(".button"));
+				button.setOnMouseClicked((mouseEvent -> {
+					if(mouseEvent.getButton() == MouseButton.PRIMARY && !button.getText().equals("🏴")){
+						button.setVisible(false);
+						if (Objects.equals(button.getId(), "BOOM")) {
+							gridPane.getChildren().removeAll(gridPane.lookupAll(".button"));
+						}
 					}
-				});
+					if(mouseEvent.getButton() == MouseButton.SECONDARY){
+						if(!button.getText().equals("🏴")){
+							button.setText("🏴");
+						}else{
+							button.setText(" ");
+						}
+					}
+				}));
 				gridPane.add(button,i,j);
 			}
 		}

@@ -1,11 +1,11 @@
 package com.example.minesweeper;
 
-public class NearBombPanesBackNumbersArrayClass {
+public class NearBombPanesIsInRange {
 
-    private BackGroundNumbersArrayClass backGroundNumbersArrayClass;
+    private final BackGroundNumbersArrayClass backGroundNumbersArrayClass;
     private final SetBomb setbomb;
 
-    public NearBombPanesBackNumbersArrayClass(BackGroundNumbersArrayClass backGroundNumbersArrayClass) {
+    public NearBombPanesIsInRange(BackGroundNumbersArrayClass backGroundNumbersArrayClass) {
         this.backGroundNumbersArrayClass = backGroundNumbersArrayClass;
         setbomb = new SetBomb(this.backGroundNumbersArrayClass);
     }

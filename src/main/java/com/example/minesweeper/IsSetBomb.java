@@ -8,16 +8,16 @@ public class IsSetBomb {
 
     private final SetRandom setRandom = new SetRandom(100,new Random());
     private final BackGroundNumbersArrayClass backGroundNumbersArrayClass ;
-    private final NearBombPanesBackNumbersArrayClass nearBombPanesBackNumbersArrayClass;
+    private final NearBombPanesIsInRange nearBombPanesIsInRange;
 
     public IsSetBomb(BackGroundNumbersArrayClass backGroundNumbersArrayClass) {
         this.backGroundNumbersArrayClass = backGroundNumbersArrayClass;
-        nearBombPanesBackNumbersArrayClass = new NearBombPanesBackNumbersArrayClass(this.getBackGroundNumbersArrayClass());
+        nearBombPanesIsInRange = new NearBombPanesIsInRange(this.getBackGroundNumbersArrayClass());
     }
 
     public void isPutBomb(int line, int column){
         if(setRandom.getRandom() < 10){
-            nearBombPanesBackNumbersArrayClass.nearBombPanesBackGroundNumbersLoop(line,column);
+            nearBombPanesIsInRange.nearBombPanesBackGroundNumbersLoop(line,column);
         }
     }
 
