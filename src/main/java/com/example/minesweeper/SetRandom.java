@@ -2,6 +2,8 @@ package com.example.minesweeper;
 
 import java.util.Random;
 
+//ランダムを返すだけのクラス
+
 public class SetRandom {
 
     private final int randomNumber;

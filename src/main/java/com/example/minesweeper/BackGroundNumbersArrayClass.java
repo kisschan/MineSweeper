@@ -1,5 +1,7 @@
 package com.example.minesweeper;
 
+//💣の周りのpaneの数字を足したりsetしたりするクラス
+
 public class BackGroundNumbersArrayClass {
     private int [][] backGroundNumbersArrays ;
 

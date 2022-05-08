@@ -1,5 +1,7 @@
 package com.example.minesweeper;
 
+//💣の周りが範囲内かどうか判断するだけ
+
 public class NearBombPanesIsInRange {
 
     private final BackGroundNumbersArrayClass backGroundNumbersArrayClass;

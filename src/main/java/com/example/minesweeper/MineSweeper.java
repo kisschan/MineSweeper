@@ -63,6 +63,7 @@ public class MineSweeper extends Application {
 
 	@Override
 	public void start(Stage stage) {
+		stage.setTitle("Minesweeper Start!");
 		setLoop.backGroundNumbersArrayLoop();
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -75,12 +76,13 @@ public class MineSweeper extends Application {
 				setBackGroundText.setNearBombText(nearBombNumberText,notNearBombText,i,j);
 				setBackGroundText.getBombText(bombText);
 				this.setGridPane(i,j,bombText,nearBombNumberText,notNearBombText,button);
-				button.setText(String.valueOf(i)+ j);
+				//button.setText(String.valueOf(i)+ j);
 				button.setOnMouseClicked((mouseEvent -> {
 					if(mouseEvent.getButton() == MouseButton.PRIMARY && !button.getText().equals("🏴")){
 						button.setVisible(false);
 						if (Objects.equals(button.getId(), "BOOM")) {
 							gridPane.getChildren().removeAll(gridPane.lookupAll(".button"));
+							stage.setTitle("Game Over 😫");
 						}
 					}
 					if(mouseEvent.getButton() == MouseButton.SECONDARY){

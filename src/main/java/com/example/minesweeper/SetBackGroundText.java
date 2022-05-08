@@ -4,6 +4,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+//ボタンの後ろのテキストを決めるクラス
+
 public class SetBackGroundText {
 
     private final BackGroundNumbersArrayClass backGroundNumbersArrayClass;

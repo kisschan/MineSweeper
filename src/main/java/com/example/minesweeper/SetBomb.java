@@ -1,5 +1,7 @@
 package com.example.minesweeper;
 
+//💣をおくだけ
+
 public class SetBomb {
 
     private final BackGroundNumbersArrayClass backGroundNumbersArrayClass;

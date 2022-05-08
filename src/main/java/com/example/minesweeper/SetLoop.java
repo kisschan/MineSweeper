@@ -1,5 +1,7 @@
 package com.example.minesweeper;
 
+//たてかけるよこでループを回すクラス
+
 public class SetLoop {
 
     private final IsSetBomb isSetBomb ;
